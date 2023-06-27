@@ -1,0 +1,202 @@
+create database crime_analysis_;
+use crime_analysis_;
+
+
+create table criminal(
+id int primary key ,
+first_name varchar(255),
+last_name varchar(255),
+phone_no1 bigint default null,
+phone_no2 bigint default null,
+street_name varchar(255),
+city varchar(255),
+gender char
+);
+
+insert into criminal values(1,"rahul","meena",9837864921,null,"shaheed udham singh marg","delhi","m"),(2,"diller","chaudhary",8326728822,null,"poorvi marg","delhi","m"),
+(3,"puja","singh",9837645567,null,"madangir street 3","delhi","f"),(4,"mahima","chaudhary",9988226732,8893729273,"kota street 22","rajhasthan","f")
+,(5,"virat","malik",8736872378,9887223367,"kidwai nagar","delhi","m"),(6,"ranu","mandal",7829426934,null,"pritampura","delhi","t"),
+(7,"swapnil","meena",9650699754,7838675044,"rajnagar extension 1","delhi","m")
+,(8,"poonam","mittal",9823636382,null,"rohtak chaudahrysingh marg 2","haryana","f"),
+(9,"siya","mittal",9833772282,7828378982,"azadpur street 4","delhi","f"),
+(10,"yash","kumar",9283797923,9827736582,"rohini pillar 33","delhi","m");
+
+create table _crime(
+id int primary key,
+type_ varchar(255),
+time_ datetime,
+district varchar(255),
+locality varchar(255),
+street_name varchar(255),
+criminal_id int,
+foreign key (criminal_id) references criminal(id)
+);
+
+insert into _crime values(201,"murder",'2023-04-22 12:30:23',"rohini","shahbad daulatpur","bhawana road",7),
+(202,"murder",'2023-04-22 12:30:23',"rohini","shahbad daulatpur","bhawana road",7),
+(203,"rape",'2019-06-16 07:27:21',"punjabi bagh","daulat pur","bahadur singh marg",2),
+(204,"robbery",'2020-11-18 08:50:22',"madangir","dakshinpuri","abdul faizal road",10),
+(205,"pick pocket",'2021-01-30 07:30:08',"vasant vihar","poorvi marg","street 32",9),
+(206,"murder",'2019-03-23 11:29:22',"pritampura","paudi nagar","street 33",3),
+(207,"rape",'2021-08-11 08:10:11',"jahangirpuri","f block","abdul faizal rod",4),
+(208,"kidnapping",'2022-12-17 03:12:22',"shalimar bagh","bh block", " shaheed udham singh marg",1),
+(209,"drug dealing",'2019-06-22 04:30:20',"vasant kunj","d block","uttam singh marg",5),
+(210,"autotheft",'2020-09-11 08:22:30',"rajiv chowk","connaught place","street 2",8),
+(211,"snatching",'2019-05-23 11:29:22',"vasant vihar","poorvi marg","street 32",6),
+(212,"domestic violence",'2021-01-30 07:30:08',"rohini","shahbad daulatpur","bhawana road",10),
+(213,"robbery",'2019-06-16 07:27:21',"rani bagh","samasti pur","bahadur singh marg",6),
+(214,"drug dealing",'2018-01-22 04:30:20',"vasant kunj","d block","uttam singh marg",9),
+(215,"terror attack",'2021-11-21 11:29:22',"new delhi","supreme court","vimal marg",5),
+(216,"pick pocket",'2021-09-12 12:22:30',"rajiv chowk","connaught place","street 2",8);
+select * from _crime;
+
+
+create table victim(
+id int primary key,
+first_name varchar(255),
+last_name varchar(255),
+street_name varchar(255),
+city varchar(255),
+phone_no1 bigint not null,
+phone_no2 bigint default null,
+gender char,
+criminal_id int,
+foreign key (criminal_id) references criminal(id)
+);
+
+INSERT INTO victim VALUES 
+(101, 'Umang', 'Rajput', 'Bhai Vir Singh Marg', 'Delhi', 9226871488 , null, 'm',4),
+(102, 'Anuraag', 'Kamra', 'Bawana Road', 'Delhi', 98262301488 , null, 'm',7),
+(103, 'Sanyam', 'Kumar', 'Bawana Road', 'Delhi', 9786871488 , null, 'm',7),
+(104, 'Shyam', 'kumar', 'Chelmsford Road', 'Delhi', 7896871488 , 7896871401, 'm',2),
+(105, 'Vimla', 'rani', 'Lodhi Road', 'Delhi', 8566871488 , null, 'f',3),
+(106, 'Umesh', 'pal', 'Safdarjung Road', 'Delhi', 8956871488 , null, 'm',5),
+(107, 'Raju', 'pal', 'Safdarjung Road', 'Delhi', 9786871488 , null, 'm',5),
+(108, 'Ramesh', 'kapoor', 'Patel Chowk Road', 'Delhi', 7986871488 , 98262521488, 'm',1),
+(109, 'Asad', 'Ansari', 'Abul Fazal Road', 'Delhi', 9225071488 , null, 'm',6),
+(110, 'Anita', 'Kumari', 'Chaudhary Jhandu Singh Marg', 'Delhi', 9206871089 , null, 'f',6),
+(111, 'Rinky', 'Singh', 'Patel Chowk Road', 'Delhi', 9806871488 , 7566871488, 'f',8),
+(112, 'Lawrence', 'Bisnoi', 'Udyan Marg', 'Delhi', 9910871488 , 7986871111, 'm', 9),
+(113, 'Goldy', 'Brar', 'Shaheed Bhagat Singh Marg', 'Delhi', 7826871488 , null, 'm', 10),
+(114, 'Shahrukh', 'Khan', 'Abul Fazal Road', 'Delhi', 8056871488 ,9226875555 , 'm',6),
+(115, 'Pinki', 'kumari', 'Mehrauli Badarpur Road', 'Delhi', 6789871488 , null, 'f',10);
+ 
+ insert into victim values(116, 'samiksha', 'kumari', 'Mehrauli Badarpur Road', 'Delhi', 9839871488 , null, 'f',10);
+
+
+create table FIR(
+id int primary key,
+FIR_type varchar(255),
+FIR_descrip varchar(255),
+victim_id int,
+crime_id int,
+foreign key (victim_id) references victim(id),
+foreign key (crime_id) references _crime(id)
+);
+
+Insert into FIR values (0001,"Murder","Shot to death Declared dead on arrival to hospital",111,206),
+(0002,"Rape","Raped on cab by cab driver.",105,207),
+(0003,"Kidnapping","kidnapping done in busy market in daylight no ransom asked yet",101,208),
+(0004,"robbery","robbery of approx 2lacs ",113,204),
+(0005,"pick pocket","stolen apple iphone at rajiv chowk metro station",108,216),
+(0006,"drug dealing","caught dealing drugs in the open childrens park ",106,209),
+(0007,"terror attack","Bomb fitted inside an auto near supreme court, 10 people died on spot 2 injured severely",112,215),
+(0008,"domestic violence","reported by a housewife of torturing her by her in-laws and husband.",110,212),
+(0009,"snatching","snatched gold chains on bike in the market",114,211),
+(0010,"murder","murdered brutally with knife and before that tortured victim with high voltage current and punches on face and
+ then finally killed him and cut him into pieces and gave to dogs of that area ",103,201),
+ (0011,"murder","murdered brutally with knife and before that tortured victim with high voltage current and punches on face and
+ then finally killed him and cut him into pieces and gave to dogs of that area ",102,202),
+ (0012,"pick pocket","stolen gold watch in bus at poorvi marg bus stand ",112,205),
+ (0013,"robbery","robbed a women by putting gun on her head and took away luxury bag and watch ",115,213),
+ (0014,"rape","raped a men in night at poorvi marg and left him in the park", 104 ,203),
+ (0015,"autotheft","stolen audi r8 from car parking of a banglow at midnight",111,210),
+ (0016,"drug dealing","caught dealing drugs in mall car parking area ",112,214);
+ 
+ 
+
+
+create table police_station(
+id int primary key,
+station_name varchar(255) not null,
+phone_no bigint not null,
+email varchar(255) not null,
+zone varchar(255) not null,
+pincode int not null,
+locality varchar(255)
+);
+
+Insert into police_station values
+ (001,"Shahbad Daulatpur",9968693845,"shahbad.daulatpur001@gmail.com","NorthWest",110042,"Rohini"),
+ (002,"daulat pur",8988893276,"daulatpur.punjbagh@gmail.com","West",330022,"Punjabi Bagh"),
+ (003,"dakshinpuri",8839028890,"dakshinpuri.mdngir@gmail.com","South",999888,"Madangir"),
+ (004,"Poorvi Marg",9988686934,"poorvmarg.vasantvhr@gmail.com","South",110034,"Vasant Vihar"),
+ (005,"Paudi nagar",898897668,"paudinag.pitmpura@gmail.com","NorthWest",998899,"Pitampura"),
+  (006,"f block",8933948020,"fblock.jhngirpuri@gmail.com","North west",898900,"Jahangirpuri"),
+  (007,"bh block",789379238,"bhblock.shalmarbagh@gmail.com","North",110043,"Shalimar bagh"),
+  (008,"d block",8498404208,"Vaskunj.dblck@gmail.com","South west",110033,"Vasant Kunj"),
+  (009,"mandawali police station",9993849322,"madhuvihar.mandawali@gmail.com","East",110092,"madhu vihar");
+
+create table policeman(
+id int primary key,
+first_name varchar(255)not null,
+middle_name varchar(255) default null,
+last_name varchar(255) not null,
+address varchar(255) not null,
+phone_no bigint not null,
+post varchar(255) not null,
+station_id int,
+foreign key(station_id) references police_station(id)
+);
+
+insert into policeman values
+(501,"bajirao",null,"singham","madhu vihar d-12",9827663487,"inspector",009),
+(502,"chulbul","singh","pandey","rithala f-block 22",9898273692,"SI",001),
+(503,"sanjay",null,"bhati","vasant vihar d block",9825367288,"inspector",008),
+(504,"vipul","singh","tanwar","fatehpur beri 455",7829777392,"inspector",003),
+(505,"rajat","kumar","meena","rajnagar extension",7053445925,"SI",007),
+(506,"abhinav","singh","patil","rohini sec 18 ",8873627881,"inspector",006),
+(507,"ramesh",null,"verma","mayapuri 7c-677",9198278192,"inspector",002),
+(508,"praveen","kumar","lohia","cpwd colony vasant vihar",8983648622,"SI",004),
+(509,"pawan",null,"sahu","pitampura paudi nagar c-60",8873973992,"inspector",005),
+(510,"ravi","kumar","meena","dakshinpuri c/927",9928827838,"head constable",003),
+(511,"satish",null,"prasun","madoli chowk 70/22",8374897292,"constable",001),
+(512,"bhanu","prasad","shankar","connnaught place",9273722947,"head constable",002),
+(513,"anjali",null,"chaurasia","uddham singh marg",8268273926,"lady constable",005),
+(514,"priya",null,"verma","rajnagar extension",9843869272,"lady constable",007);
+
+
+
+create table police_record(
+id int primary key,
+past_record varchar(255) default null,
+record_type varchar(255) default null,
+date_ varchar(255) default null,
+criminal_id int,
+station_id int,
+policeman_id int,
+foreign key(criminal_id) references criminal(id),
+foreign key (station_id) references police_station(id),
+foreign key(policeman_id) references policeman(id)
+);
+alter table police_record modify date_ date;
+
+insert into police_record values
+(401,"clean record","murder",'2023-04-25',7,001,502),
+(402,"murder charges","murder",'2023-04-28',7,001,502),
+(403,"eve teasing","rape",'2019-06-29',2,002,507),
+(404,"clean record","robbery",'2020-11-20',10,003,504),
+(405,"clean record","pick pocket",'2021-01-30',9,004,508),
+(406,"threatning","murder",'2019-03-30',3,005,509);
+
+insert into police_record values 
+(407,"clean record","rape",'2021-08-12',4,006,506),
+(408,"clean record","kidnapping",'2022-12-20',1,007,505),
+(409,"clean record","drug dealing",'2019-06-22',5,008,503),
+(410,"clean record","autotheft",'2020-09-11',8,002,507),
+(411,"clean record","snatching",'2019-05-23',6,004,508),
+(412,"robbery","domestic violence",'2021-01-30',10,001,502),
+(413,"snatching","robbery",'2019-06-16',6,004,508),
+(414,"pick pocket","drug dealing",'2018-01-22',9,008,503),
+(415,"suspicious activity","terror attack",'2021-11-21',5,002,507),
+(416,"autotheft","pick pocket",'2021-09-14',8,002,507);
